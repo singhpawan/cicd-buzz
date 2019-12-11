@@ -1,0 +1,74 @@
+# Inheritance
+
+- Inheritance concepts ( to code re use)
+- Inheritance in Practice
+- Advanced Inheritance ( multiple inheritance with mix in classes)
+- Designing for Inheritance
+- Defensive Programming with Abstract Base Classes
+- Advanced: How Inheritance actually works ( design considerations)
+
+
+# 8.1 Inheritance concepts
+
+>>> p.spam()
+Parent.spam 42
+>>> p.grok()
+Parent.grok
+Parent.spam 42
+
+
+Inheritance: mechanism that borrows functionality from existing class
+
+object is the root of all objects. Not needed in python3
+
+>>> c = Child1(23)
+still need to pass the value for the parent
+
+The original class provides all the functionality and you want to add some more.
+The other possibility is that we can modify an existing functionality in the parent.
+
+
+>>> c.grok()
+Parent.grok
+Child2.spam 23 # spam of the child gets called
+
+Third thing
+Child3 gets additional functionality of the parent.
+
+Fourth thing we can do is that we can add an extra attribute.
+Child4: But here we need to use the init method and initialize the parent as well.
+If we don't do that all sorts of horrible things could happen.
+
+>>> c4 = Child4(23, 34)
+>>> c4.value
+23
+>>> c4.extra
+34
+
+Child5 inherits from two parents and what you are going to get is get the combined
+functionality of both the parents.
+
+#8.2
+Practical example of how to use the print_table function written earlier and make
+it extensible to print out data in different formats (CSV, HTML and so on )
+
+
+The print_table function is printing table headers and then emitting a row.
+
+We can maybe do that in a class Table Formatter. Don't know what the methods will do but
+maybe we can use the print_table function and make it drive a class which has those methods.
+
+Basically moving the algorithm for printing table up a class.
+
+
+In the version2 we expect a formatter which will drive the process.
+
+import table
+formatter = table.TextFormatter()
+table.print_talbe(portfolio, ['name', 'shares', 'price'], formatter)
+
+
+
+
+
+

@@ -1,0 +1,79 @@
+Text Processing and Files:
+- File and String basics
+- Project: Reading from a file and performing a calculation
+- Project: using the csv module to read data
+
+3.1: File and String basics
+
+
+f = open('portfolio.csv', 'r')
+f.close()
+
+It's common to open and close the file and closing of file is important for the operating system.
+There is something else we can do is use the with context.
+
+Text manipulation to cleanup the data, extract the data.
+
+f = open('portfolio.csv', 'r')
+data = f.read() # grabs the entire file and puts it into a text string.
+print(data) # looks more like the original file.
+for line in data:
+  print(line)
+
+line
+
+f.close() # is important for os and is easy to forget.
+
+
+There is a common operation involving files
+1. open file 2. Do some operations 3.Close the file.
+
+The more modern way is to use the with statement
+
+with open('portfolio.csv', 'r') as f: # with statement establishes the context and closes the file when done.
+  data = f.read()
+
+a = 'hello world'
+b = "hello world"
+
+treat it like array of characters
+
+a[0]
+a[1]
+a[-2] : second to the last
+
+a[0:5]
+a[:5]
+a[-5:]
+
+len(a)
+
+c = 'hello'
+d = 'world'
+
+c + d
+'helloworld'
+
+line.strip() # gets rid of white spaces
+
+if you do anything to the string, you have to save the string.
+if you have to save the result you need to print into the variable.
+
+line.replace('"', '-')
+
+parts = line.split(',')
+parts[0] = parts[0].strip('"')
+
+parts[2] * parts[3] # cant's multiply the string
+
+parts[2] = int(parts[2])
+parts[3] = int(parts[3])
+
+## Be on the lookout for standard library modules.
+
+
+
+
+
+
+

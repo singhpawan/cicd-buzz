@@ -1,0 +1,27 @@
+# is a comment
+
+Python comes from a scripting language and executes line by line.
+
+python doesn't require you to declare data type.
+
+Can't start a variable name with a digit.
+
+While loop execute everything under the indentation and it's knows it
+ends when the next line is not under the indentation.
+
+principal = 500000
+payment = 3873.34
+rate = 0.05
+total_paid = 0
+
+while principal > 0:
+  interest  = principal*(rate/12)
+  principal = principal + interest - payment
+  total_paid += payment
+
+print('Total paid', total_paid)
+
+# usually program are indentation with 4 spaces (don't use tab)
+
+
+

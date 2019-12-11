@@ -1,0 +1,97 @@
+
+
+Write function using def
+
+def add(x, y):
+  return x + y
+
+
+All variables including arguments are private to that function.
+
+
+add(4,5)
+add(x=4, y=5) #keyword arguments
+add(4, y=5) # keyword arguments
+add(4, x=5) # Gives an error since the interpreter is confused since we are assigning two values to x
+add (x, y, z)
+add(x, *, z) # Api design
+
+def greeting(name): # ''' Is called the documentation string and feeds the help function of python.
+    '''
+    Issues a greeting
+    '''
+    print("Hello,",name)
+
+
+Any variables are private to that function like other programming language
+
+positional arguments vs keyword arguments.
+
+Use functions to improve the data processing code.
+
+
+
+import glob
+files = glob.glob('portfolio*.csv')
+for file in files:
+  print file
+
+glob takes all the files of a specified pattern and then prints them.
+
+
+for rowno, row in enumerate(rows, start=1):
+  print(rowno, row) ( this rowno helps us when we catch the error and it tell us where the error occured).
+
+
+try:
+
+except ValueError as err: ( extra qualifier err using the qualifier as, which stores the exception in the
+variable and it tells us how it happened).
+
+except Exceptino as err: (Diaper Pattern) catches everything.
+it will even catch typos. Narrow down the exception to be as narrow as possible.
+(float --> flot)
+
+Print statement are the side effect of the function with no control over them.
+if errors == 'warn': the show otherwise the error/warning are silenced and users
+are given the choice to turn on and off the warnings.
+
+
+
+try:
+
+except Exception as err: # called a diaper pattern (it catches everything)
+
+
+zen of python:
+Errors should no pass silently unless explicitly silenced.
+
+def portfolio_cost(filename, *, errors="warn"): # The * forces the called to use positional arguments and specify the errors
+portfolio_cost('missing.csv',errors='silent')) (the code should be readable) and someone looks at that
+and can understand pretty easily that errors are silent by default. And at the same time
+we can force them to use it. As the program becomes bigger it becomes easier to document the function.
+
+
+What errors are we supposed to handle ?
+# Someone calls the program with a bogus filename with the open call.
+# should I be defensive about catching them. Never catch the errors unelss you can
+deal with the error at that point. In this case we can't open the file and how do we recover.
+# if the code is crashing beyond the limitations of the program let it crash.
+
+
+Function Design:
+
+- think about the print side effects ( reporting error messages, how arguments are passsed)
+- Defensive programming ( checking for valid inputs)
+- what kind of exception your should or shouldnot handle
+- you should only handle exception that you could recover from
+- for ex: if somebody gives a bogus filename you might not rcover.
+- defensive programming
+- forced keyword usage
+
+
+
+for loop:
+for loop with counter:
+for look with enumerate:
+

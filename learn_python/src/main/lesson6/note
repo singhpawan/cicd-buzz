@@ -1,0 +1,153 @@
+ # simple.py
+
+ As we start writing larger code base we need to organize the code in modules.
+
+ x = 42
+
+ def spam():
+   print('x is', x)
+
+ def run():
+   print('Calling spam')
+   spam()
+
+ print('Running')
+ run()
+
+
+
+>>> import simple
+Calling spam
+x is 42
+>>simple
+<module 'simple' from '/user/pawan/PyCharmProejcts'
+
+simple.run()
+>>>simple.x
+42
+
+when i import it ran all the statements in the simple and it takes place in an isolated
+environment and it is contained in it's own little namespace. Get to contents by prefixing
+simple.
+
+Python is trying to keep different source files isolated from each other.
+
+You need the module to access contents of that module.
+
+math.sqrt(2)
+
+
+from simple import run
+
+It still executes the entire file but the big difference is that all I get is the run function.
+
+Effectively python is importing the module and is copying soemthing out of it.
+Allowed to do is use the copy.
+
+Confusion regarding that the from simple import run only loads the run function. Not true
+it loads the entire file. it keeps everything in memory and only exposes the run function.
+
+
+import statement is a one time operation. If you run it again, it doesn't run the file again.
+And python caches the module. he module is stores in cache
+
+import sys
+
+sys.module['simple']
+
+del sys.module['simple']
+
+redid an import and then you will see it running again.
+import simple
+
+
+Common mistake: Editing code and then make a change and but not getting the new code.
+The first thing is because the cache didn't get loaded. you have to quit the prompt and
+reload it again.
+
+Another thing is that the import statement might fail.
+python can't find the module.
+
+import sys
+sys.path
+# if the code is not on that path it will not be able to find the path.
+
+sys.path.append("..")
+
+not a fan of manually modifying the path.
+is to temporarily add it to the path
+env PYTHONPATH=.. python3
+
+When you import a module you see the code execute the code at bottom. It's not a
+great idea to get print statements in the module.
+
+To protect the code.
+
+Every single module knows it's own name.  if you are the main program or the interactive shell
+your name is main. On the other hand
+>>> import simple
+>>> simple.__name__
+'simple'
+
+People will protect the last part of the code with that.
+The boiler plate code prevents it from execute the code when importing as a module.
+
+>>> f = open('./../Data/portfolio.csv')
+>>> rows = csv.reader(f)
+>>> headers = next(rows)
+>>> headers
+['name', 'date', 'shares', 'price']
+>>> row = next(rows)
+>>> row
+['AA', '2007-06-11', '100', '32.20']
+
+typer conversion to some of the columns and generalize them
+
+types = [str, str, int, float]
+int('42')
+
+>>> types = [str, str, int, float]
+>>> types
+[<class 'str'>, <class 'str'>, <class 'int'>, <class 'float'>]
+>>> for func, val in zip(types,row):
+...   print(func, val)
+...
+<class 'str'> AA
+<class 'str'> 2007-06-11
+<class 'int'> 100
+<class 'float'> 32.20
+
+
+>>> converted = [func(val) for func, val in zip(types,row)]
+>>> converted
+['AA', '2007-06-11', 100, 32.2]
+
+# to get a dictionary of the converetd types
+dict(zip(headers,converetd))
+
+
+#6.3 Making a package
+
+How to organize code in modules.
+
+As a general rule, Don't create top level modules.
+
+Standard way is to create package. It will be container for your code.
+Ridiculous name to honor Monty Python.
+
+Move your code into modules and create an empty __init__.py file in there.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

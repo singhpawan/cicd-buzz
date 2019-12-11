@@ -1,0 +1,280 @@
+Lesson 7: Classes and Objects
+
+- Built in types are classes
+- Class convenient way of creating data structure and attaching methods
+- how dynamic nature allows to write generic functions.
+
+Revisit dictionary
+
+holding = { 'name': 'AA', 'date': '2017-03-22', 'shares': 300, 'price': 199 }
+def cost(holding):
+  return holding['shares'] * holding['price']
+
+There is a better way of doing this by creating a class.
+
+define an init function. The init function is to do setup.
+Cost method perform a calculation.
+
+Here what we have done is described a data structure. Here we are creating an instance of
+holding.
+
+h = Holding('AA', '2018-39-39', 39, 39)
+
+# The arguments to this call are input to the methods init.
+The purpose of init is to save the data. The self is a newly created empty object
+and what we are doing is saving information
+
+class Holding(object):
+    def __init__(self, name, date, shares, price):
+        self.name  = name
+        self.date = date
+        self.shares = shares
+        self.price = price
+
+The self is a newly created empty object and what I am doing is storing the values of the
+arguments in the function.
+
+h store the attributes.
+
+h will have the cost operations that will compute the cost.
+
+the functions are operations that are carried out on the data.
+
+h.cost()
+
+when we do h.cost(), python looks at the what that h is and see that it is a holding
+and then it is passed to the cost function as the self argument.
+
+so the functions in python has a self argument as the first argument, telling the data
+/object you are working with.
+
+
+A class is a collection of functions and the functions serve as methods that are accessed
+using the dot operator.
+
+>>> portfolio = read_portfolio('./../Data/portfolio.csv')
+
+
+7.2 Understanding Attribute Access
+
+The whole python object system basically boils down to 3 things:
+
+->>> h = Holding('AA', '2017-10-09', 100, 30)
+>>> h
+<__main__.Holding object at 0x10dee54e0>
+
+Once use the name of the class to create an object like that. There are 3 things that we can do.
+
+- Lookup an attribute # h.name
+- Set an attribute # h.shares = 30
+- delete an attribute # del h.shares
+
+
+Python doesn't enforce any rules and you can set an attribute for ex:
+
+>>> h.time
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'Holding' object has no attribute 'time'
+
+But if I create on on the spot, python is fine with it.
+
+>>> h.time = "10:30am"
+>>> h.time
+'10:30am'
+
+This also lead to some very interesting problem. For ex: in a typo
+
+>>> h.shares
+100
+>>> h.share = 45
+>>> h.share
+45
+
+
+So the operations such as
+h.cost()
+
+h. sell(25)
+
+are built on top of get, set and delete machinary.
+
+when we do h.cost() there are two different operations going on
+one is lookup of the cost and then the operation.
+
+(h.cost) ()
+
+>>> (h.cost) ()
+2250
+>>> h.cost()
+2250
+
+>>> c = h.cost
+# comes back and return the cost method and calling it using c() fires it up
+>>> c()
+2250
+>>> c
+<bound method Holding.cost of <__main__.Holding object at 0x10dee54e0>>
+
+
+>>> print('%10s %10d %10.2f' % (h.name, h.shares, h.cost))
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: must be real number, not method
+
+
+It can lead to some interesting error when a method is accidently called a parameter.
+
+>>> print('%10s %10d %10.2f' % (h.name, h.shares, h.cost()))
+        AA         75    2250.00
+
+
+Methods are based on the top of get, set, del machinary.
+
+
+>>> getattr(h, 'name') # h.name
+'AA'
+>>> setattr(h, 'shares', 50) # h.shares
+>>> h.shares
+50
+
+>>> delattr(h, 'shares')
+
+it's worth knowing them to write general purpose code.
+
+>>> output_columns = ['name', 'shares', 'price']
+>>> for colname in output_columns:
+...   print(colname, '=', getattr(h, colname))
+...
+name = AA
+shares = 50
+price = 30
+
+we can access it chane and reconfigure it in different ways.
+
+
+You can reload a module in python but it is not advised
+
+importlib.reload(table)
+
+
+>>> table.print_table(portfolio, ['name', 'shares'])
+      name
+    shares
+
+AA         100
+IBM        50
+CAT        150
+MSFT       200
+GE         95
+MSFT       50
+IBM        100
+>>>
+
+
+We can pick the column and the order of the columns.
+If you use the getattr it opens the possibility of writing generic piece of code
+and doesn't care what the objects are but does it in a very generic way.
+
+
+#7.3 Class Methods and Alternate Constructors
+
+
+Sometimes we want to create objects in a different way. A class can have only one __init__
+function.
+
+
+Demonstrate using date library
+
+>>> d = dateobj.Date(2012, 12, 21)
+>>> d.year
+2012
+>>> d.month
+12
+>>> s = '2012-12-21'
+
+Now I have the date in a different format how would I create a date from that.
+
+>>> s = '2012-12-21'
+>>> parts = s.split('-')
+>>> parts
+['2012', '12', '21']
+
+>>> d = dateobj.Date(int(parts[0]), int(parts[1]), int(parts[2]))
+
+>>> d.year
+2012
+
+
+Now I have to some kind of special processing for that to happen and might even write
+a function.
+
+d = date_from_string('2019-39-39')
+
+But the function is in some detached from the class, it's related to the class but
+it's detached in a sense that it is in own little world. The code doesn't hang well together.
+
+This is a known problem in the python world.
+
+We might want to have different ways of creating methods.
+
+One approach is to have class method.
+
+>>> d = Date.from_string('2007-39-39')
+## Puts the alternate object creation technique on the class itself rather than a separate function.
+>>> d = Date(2012, 10 ,10)
+
+Two different methods of creating objects.
+
+
+>>> d = Date.from_string('2007-39-39')
+What interesting happens is that Class Date is passed as cls and cls is stand in for the Date class.
+
+This class to the left of the dot gets passed in the cls parameter.
+
+We can use it for other constructors as well like getting today's date
+
+One of the reason to get objects from the class method is that the classname is
+not hardcoded and somebody might want to inherit the Date.
+
+class MyDate(Date):
+  def yow(self):
+    print("Yow")
+
+d = MyDate.today()
+d.year
+d.yow()
+
+This inherited class will get all of those inherited constructors / methods.
+
+Alternate constructor: Look at the class method for doing that.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

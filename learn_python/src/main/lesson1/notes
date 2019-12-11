@@ -1,0 +1,69 @@
+#!/usr/bin/env python3 ("This will enable us to make the file executable")
+
+import sys
+import urllib.request
+from xml.etree.cElementTree import XML
+
+
+if len(sys.argv) != 3:
+    raise SystemExit('Usage: nextbus.py route stopid')
+
+route = sys.argv[1]
+stop = sys.argv[2]
+u = urllib.request.urlopen('http://ctabustracker.com/bustime/map/getStopPredictions.jsp?route={}&stop={}'.format(
+    route,stop))
+
+data = u.read()
+doc = XML(data)
+
+for pt in doc.findall('.//pt'):
+    print(pt.txt)
+
+
+
+Note:
+
+python ... (triple dots) in interactive mode python is waiting for you to finish.
+
+saving result in variables
+
+a = 5
+
+_ (underscore) saves the value of the last variable and that is only available in interactive mode.
+
+help(print)
+
+quit() or ctrl-D
+
+emacs test.py or use an editor to create a file.
+
+
+use python in the interactive mode using
+
+python -i nextbus.py 22 14787
+
+make route and stop location parameterized
+
+and to tell the python environment mention python 3 at the top
+
+and then chmod +x to make the python program executable.
+
+./nextbus.py 22 123938
+
+
+
+
+# It will move you to the interactive console and at the point you can poke around the program
+and print variables.
+
+
+## Debugging
+
+
+
+>>> import pdb
+>>> pdb.pm()  //short for postmortem
+(pdb) print(pt.txt)
+(pdb) list # provides surrounding context to the program.
+(pdb) s # takes you to the next linse
+(pdb) c # quite the debugger

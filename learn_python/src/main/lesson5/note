@@ -1,0 +1,167 @@
+- list, tuple, sets, dicts
+- build a data structure from a file
+- data manipulation
+- filtering, sorting, grouping
+- list,set and dict comprehensions
+
+tuple : bunch of values packed together in a single thing
+Mental model is like a row in a database or a record
+tuple: is like a row in a database
+When thinking about tuple, you are packing and unpacking values
+tuples are immutable, once you make them you can change the value of it or frozen in space
+tuples have different parts and they might be different type of data structure / data
+
+
+
+t = ('AA', '2011-01-12' , 100 , 200)
+names, data, shares, price = t
+
+But if there is a list inside a tuple that can be modified.
+
+List: bunch of items
+works like an array and you can modify , change or overwrite an item in the list.
+you can modify
+
+a = ['apple', 'mango']
+a.append('tango')
+a.insert(1, 'hello')
+
+
+Usually with list: the items are of same type as compared to tuple, list of string, numbers.
+They will all be same kind of item. Notable difference between list and tuple. With tuple
+different tuple have different kind of data.
+When doing data processing using list comprehensions it becomes more obvious
+
+Set:
+have only unique values | distinct items
+Removes duplicates and you get a collection of unique items
+- you might want to deduplicate data
+- Very often used for membership testing
+
+'aa' in names:
+
+set(names) : gives the unique names and very often used for membership testing.
+
+
+Dictionary:
+mapping keys mapped to some othe values
+Easy for lookup problems.
+Key can only be there once. ( you get some of the features of set)
+Good for membership testing.
+Build data structure out of anything.
+
+prices = {
+    'IBM': 99.2,
+    'GOOGL': 1234,
+    'FB': 23
+}
+
+list of tuples
+items = [('AA',100, 32), ('BB', 92,39)]
+
+
+prices dictionary
+
+prices = {
+    'IBM' : {'current_price': 100, 'high_price': 200, 'low_Price': 50},
+    'GOOGL' : {'current_price': 1200, 'high_price': 2000, 'low_Price': 500}
+
+}
+
+
+Dictionaries:
+
+names = []
+names.append(holding_names)
+
+# Took a list and create new list for data collection
+
+# list
+more100 = []
+for holding in portfolio:
+  if holding['shares'] > 100:
+    more100.append(holding['name'])
+
+Because this is so common filtering and data collection.
+
+List comprehensions: (since this is so common in python)
+
+total = sum([holding['shares'] * holding['price'] for holding in portfolio]
+sum(_)
+
+names = [ holding['name'] for holding in portfolio]
+more100 = ['holding for holding in portfolio if holding['shares'] > 100]
+
+
+Data file has information about the stocks purchased.
+Find whether the portfolio is up or down based on today's stock value.
+
+unique_names = set(names)
+
+unique_names = { holding['name'] for holding in portfolio }
+
+Goal is to find whether a good stock investor or not.
+
+1. Find the current pric.
+
+namestr = ','.join(unique_names)
+
+import urllib.request
+u = urllib.request.urlopen('http://finance.yahoo.com/d/quotes.csv?s={}&f=l1'.foramt(namesstr))
+data=u.read()
+pricedata=data.split()
+unique_names
+for name, price in zip(unique_names,pricedata):
+  print(name, '=', price)
+
+
+# create dictionary
+
+prices = dict(zip(unique_names, pricedata))
+
+prices = { name: float(price) for name, price in zip(unique_names, pricedata) }
+
+current_value = 0.0
+
+for holding in portfolio:
+  current_price += holding['shares'] * prices[holding['name']]
+
+current_price = sum([holding['shares'] * prices[holding['name']] for holding in portfolio] )
+
+change = current_val - total
+
+# zip let's you iterate over two different data sets at the same time
+
+a = lambda x: 10x
+a(10)
+
+makes it 10x
+
+
+b = lambda x,y : x + y
+b(2,3)
+5
+
+portfolio.sort(key = lambda holding: holding['shares'])
+
+min(portfolio, key=lambda holding: holding['price'])
+max(portfolio, key= lambda holding: holding['price'])
+
+import itertools
+for name, items in itertools.groupby( portfolio, key=lambda holding: holding['name']):
+  print('NAME:', name)
+  for it in items:
+    print('   ',it)
+
+# building a dictionary out of grouping data
+
+by_name = { name: list(items)
+            for name, items in itertools.groupby( portfolio, key=lambda holding: holding['name']) }
+
+by_name['IBM']
+# give me all the entries for IBM.
+# common techniques for grouping, data reductions and so on.
+
+
+
+
